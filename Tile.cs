@@ -33,7 +33,14 @@ namespace MyGame
                     shape.Texture = Content.texTile1;
                     break;
             }
-            shape.TextureRect = new IntRect(0,0,TileSize,TileSize);
+            shape.TextureRect = GetTextureRect(1,1);
+        }
+        public IntRect GetTextureRect(int i, int j)
+        {
+            int x = i * TileSize + i * 2;
+            int y = j * TileSize + j * 2;
+
+            return new IntRect(x, y, TileSize, TileSize);
         }
         public void Draw(RenderTarget target, RenderStates states)
         {
