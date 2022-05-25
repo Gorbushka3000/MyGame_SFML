@@ -12,6 +12,7 @@ namespace MyGame
         public Game()
         {
             world = new World();
+            world.GeneratWorld();
         }
         public void Update()
         {

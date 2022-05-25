@@ -6,6 +6,7 @@ namespace MyGame
     public class World : Transformable, Drawable
     {
         public const int WorldSize = 5;
+
         Chunk[][] chunks;
         public World()
         {
@@ -13,21 +14,33 @@ namespace MyGame
 
             for (int i = 0; i < WorldSize; i++)
                 chunks[i] = new Chunk[WorldSize];
-            
-            for(int x = 0; x < Chunk.ChunkSize; x++)
-                for(int y = 0; y < Chunk.ChunkSize; y++)
+        }
+        public void GeneratWorld()
+        {
+            for(int x = 5; x < 7; x++)
+                for(int y = 5; y < 7; y++)
                     SetTile(TileType.GROUND, x, y);
-
-            for (int x = Chunk.ChunkSize; x < Chunk.ChunkSize * 2; x++)
-                for (int y = 0; y < Chunk.ChunkSize; y++)
-                    SetTile(TileType.GRASS, x, y);
         }
         public void SetTile(TileType type, int x, int y)
         {
             var chunk = GetChunk(x, y);
             var tilePosition = GetTilePosFromChunk(x, y);
 
-            chunk.SetTile(type, tilePosition.X, tilePosition.Y);
+            Tile upTile = GetTile(x, y - 1);
+            Tile downTile = GetTile(x, y + 1);
+            Tile leftTile = GetTile(x - 1, y);
+            Tile rightTile = GetTile(x + 1, y);
+
+            chunk.SetTile(type, tilePosition.X, tilePosition.Y, upTile, downTile, leftTile, rightTile);
+        }
+        public Tile GetTile(int x, int y)
+        {
+            var chunk = GetChunk(x, y);
+            if (chunk == null)
+                return null;
+            var tilePosition = GetTilePosFromChunk(x, y);
+
+            return chunk.GetTile(tilePosition.X, tilePosition.Y);
         }
         public Chunk GetChunk(int x, int y)
         {

@@ -24,10 +24,16 @@ namespace MyGame
                 tiles[i] = new Tile[ChunkSize];
         }
 
-        public void SetTile(TileType type, int x, int y)
+        public void SetTile(TileType type, int x, int y, Tile upTile, Tile downTile, Tile leftTile, Tile rightTile)
         {
-            tiles[x][y] = new Tile(type);
+            tiles[x][y] = new Tile(type, upTile, downTile, leftTile, rightTile);
             tiles[x][y].Position = new Vector2f (x * Tile.TileSize, y * Tile.TileSize);
+        }
+        public Tile GetTile(int x, int y)
+        {
+            if(x<0||y<0||x>=ChunkSize||y>=ChunkSize)
+                return null;
+            return tiles[x][y];
         }
         public void Draw(RenderTarget target, RenderStates states)
         {

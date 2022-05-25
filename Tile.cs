@@ -19,9 +19,34 @@ namespace MyGame
         public const int TileSize = 16;
         TileType type = TileType.GROUND;
         RectangleShape shape;
-        public Tile(TileType type)
+        Tile upTile = null;
+        Tile downTile = null;
+        Tile leftTile = null;
+        Tile rightTile = null;
+        public Tile(TileType type, Tile upTile, Tile downTile, Tile leftTile, Tile rightTile)
         {
             this.type = type;
+
+            if (upTile == null)
+            {
+                this.upTile = upTile;
+                this.upTile.downTile = this;
+            }
+            if (downTile == null)
+            {
+                this.downTile = downTile;
+                this.downTile.upTile = this;
+            }
+            if (leftTile == null)
+            {
+                this.leftTile = leftTile;
+                this.leftTile.rightTile = this;
+            }
+            if (rightTile == null)
+            {
+                this.rightTile = rightTile;
+                this.rightTile.leftTile = this;
+            }
             shape = new RectangleShape(new Vector2f(TileSize,TileSize));
 
             switch(type)
@@ -34,6 +59,11 @@ namespace MyGame
                     break;
             }
             shape.TextureRect = GetTextureRect(1,1);
+            UpdateView();
+        }
+        public void UpdateView()
+        {
+
         }
         public IntRect GetTextureRect(int i, int j)
         {
