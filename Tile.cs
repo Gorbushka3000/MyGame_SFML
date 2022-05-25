@@ -8,27 +8,32 @@ using System.Threading.Tasks;
 
 namespace MyGame
 {
-    enum TileType
+    public enum TileType
     {
         NONE,
-        GROUND
+        GROUND,
+        GRASS
     }
     public class Tile : Transformable, Drawable
     {
         public const int TileSize = 16;
         TileType type = TileType.GROUND;
         RectangleShape shape;
-        public Tile()
+        public Tile(TileType type)
         {
+            this.type = type;
             shape = new RectangleShape(new Vector2f(TileSize,TileSize));
 
             switch(type)
             {
                 case TileType.GROUND:
-                    shape.Texture = Content.texTile0;
-                    shape.TextureRect = new IntRect(0,0,TileSize,TileSize);
+                    shape.Texture = Content.texTile0;   
+                    break;
+                case TileType.GRASS:
+                    shape.Texture = Content.texTile1;
                     break;
             }
+            shape.TextureRect = new IntRect(0,0,TileSize,TileSize);
         }
         public void Draw(RenderTarget target, RenderStates states)
         {
