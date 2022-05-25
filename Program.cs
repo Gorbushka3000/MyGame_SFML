@@ -12,6 +12,7 @@ namespace MyGame
             win = new RenderWindow(new SFML.Window.VideoMode(800, 600), "MyGame");
             win.SetVerticalSyncEnabled(true);
             win.Closed += Win_Closed;
+            Content.Load();
             while (win.IsOpen)
             {
                 win.DispatchEvents();
