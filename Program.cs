@@ -1,7 +1,5 @@
-﻿using SFML;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.Window;
-using System;
 
 namespace MyGame
 {
