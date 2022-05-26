@@ -22,31 +22,82 @@ namespace MyGame
         Tile upTile = null;
         Tile downTile = null;
         Tile leftTile = null;
-        Tile rightTile = null;
+        public Tile rightTile = null;
+
+        public Tile UpTile
+        {
+            get
+            {
+                return upTile;
+            }
+            set
+            {
+                upTile = value;
+                UpdateView();
+            }
+        }
+        public Tile DownTile
+        {
+            get
+            {
+                return downTile;
+            }
+            set
+            {
+                downTile = value;
+                UpdateView();
+            }
+        }
+        public Tile LeftTile
+        {
+            get
+            {
+                return leftTile;
+            }
+            set
+            {
+                leftTile = value;
+                UpdateView();
+            }
+        }
+        public Tile RightTile
+        {
+            get
+            {
+                return rightTile;
+            }
+            set
+            {
+                rightTile = value;
+                UpdateView();
+            }
+        }
+
         public Tile(TileType type, Tile upTile, Tile downTile, Tile leftTile, Tile rightTile)
         {
             this.type = type;
 
-            if (upTile == null)
+            if (upTile != null)
             {
-                this.upTile = upTile;
-                this.upTile.downTile = this;
+               this.upTile = upTile;
+               this.upTile.DownTile = this;
             }
-            if (downTile == null)
+            if (downTile != null)
             {
                 this.downTile = downTile;
-                this.downTile.upTile = this;
+                this.downTile.UpTile = this;
             }
-            if (leftTile == null)
+            if (leftTile != null)
             {
                 this.leftTile = leftTile;
-                this.leftTile.rightTile = this;
+                this.leftTile.RightTile = this;
             }
-            if (rightTile == null)
+            if (rightTile != null)
             {
                 this.rightTile = rightTile;
-                this.rightTile.leftTile = this;
+                this.rightTile.LeftTile = this;
             }
+
             shape = new RectangleShape(new Vector2f(TileSize,TileSize));
 
             switch(type)
@@ -58,12 +109,68 @@ namespace MyGame
                     shape.Texture = Content.texTile1;
                     break;
             }
-            shape.TextureRect = GetTextureRect(1,1);
+           // shape.TextureRect = GetTextureRect(1,1);
+
             UpdateView();
         }
         public void UpdateView()
         {
+            if (upTile != null && downTile != null  && leftTile != null && rightTile != null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(1 + i, 1);
+            }
+            else if (upTile == null && downTile == null && rightTile == null && leftTile == null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(9 + i, 3);
+            }
 
+            //---------------------------------------------------------------------------------//
+
+            else if (upTile == null && downTile != null && rightTile != null && leftTile != null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(1 + i, 0);
+            }
+            else if (upTile != null && downTile == null && rightTile != null && leftTile != null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(1 + i, 2);
+            }
+            else if (upTile != null && downTile != null && rightTile != null && leftTile == null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(0, i);
+            }
+            else if (upTile != null && downTile != null && rightTile == null && leftTile != null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(4, i);
+            }
+
+            //---------------------------------------------------------------------------------//
+
+            else if (upTile == null && downTile != null && rightTile != null && leftTile == null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(i*2, 3);
+            }
+            else if (upTile == null && downTile != null && rightTile == null && leftTile != null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(1 + i*2, 3);
+            }
+            else if (upTile != null && downTile == null && rightTile != null && leftTile == null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(i * 2, 4);
+            }
+            else if (upTile != null && downTile == null && rightTile == null && leftTile != null)
+            {
+                int i = Program.Random.Next(0, 3);
+                shape.TextureRect = GetTextureRect(1 + i * 2, 4);
+            }
         }
         public IntRect GetTextureRect(int i, int j)
         {

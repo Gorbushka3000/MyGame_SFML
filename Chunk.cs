@@ -33,6 +33,7 @@ namespace MyGame
         {
             if(x<0||y<0||x>=ChunkSize||y>=ChunkSize)
                 return null;
+
             return tiles[x][y];
         }
         public void Draw(RenderTarget target, RenderStates states)

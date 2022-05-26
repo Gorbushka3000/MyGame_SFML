@@ -17,8 +17,8 @@ namespace MyGame
         }
         public void GeneratWorld()
         {
-            for(int x = 5; x < 7; x++)
-                for(int y = 5; y < 7; y++)
+            for(int x = 0; x < 50; x++)
+                for(int y = 18; y < 32; y++)
                     SetTile(TileType.GROUND, x, y);
         }
         public void SetTile(TileType type, int x, int y)
@@ -38,6 +38,7 @@ namespace MyGame
             var chunk = GetChunk(x, y);
             if (chunk == null)
                 return null;
+
             var tilePosition = GetTilePosFromChunk(x, y);
 
             return chunk.GetTile(tilePosition.X, tilePosition.Y);

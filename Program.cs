@@ -10,6 +10,7 @@ namespace MyGame
         static RenderWindow win;
         public static RenderWindow Window { get { return win; } }
         public static Game Game { get; private set; }
+        public static Random Random { get; private set; }
         static void Main(string[] args)
         {
             win = new RenderWindow(new SFML.Window.VideoMode(800, 600), "MyGame");
@@ -17,8 +18,13 @@ namespace MyGame
 
             win.Closed += Win_Closed;
             win.Resized += Win_Resized;
+
             Content.Load();
+
+            Random = new Random();
             Game = new Game();
+
+
             while (win.IsOpen)
             {
                 win.DispatchEvents();
