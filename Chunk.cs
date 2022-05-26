@@ -22,7 +22,7 @@ namespace MyGame
         public void SetTile(TileType type, int x, int y, Tile upTile, Tile downTile, Tile leftTile, Tile rightTile)
         {
             tiles[x][y] = new Tile(type, upTile, downTile, leftTile, rightTile);
-            tiles[x][y].Position = new Vector2f (x * Tile.TileSize, y * Tile.TileSize);
+            tiles[x][y].Position = new Vector2f (x * Tile.TileSize, y * Tile.TileSize) + Position;
         }
         public Tile GetTile(int x, int y)
         {
@@ -33,14 +33,12 @@ namespace MyGame
         }
         public void Draw(RenderTarget target, RenderStates states)
         {
-            states.Transform *= Transform;
-
             for (int x = 0; x < ChunkSize; x++)
             {
                 for (int y = 0; y < ChunkSize; y++)
                 {
                     if (tiles[x][y] == null) continue;
-                    target.Draw(tiles[x][y], states);
+                    target.Draw(tiles[x][y]);
                 }
             }
         }

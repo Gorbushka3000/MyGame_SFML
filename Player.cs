@@ -43,13 +43,17 @@ namespace MyGame
         public void Spawn()
         {
             Position = StartPosition;
+            velocity = new Vector2f();
         }
         public void Update()
         {
             updatePhysics();
             updateMove();
 
-            Position += velocity;
+            Position += move + velocity;
+
+            if (Position.Y > Program.Window.Size.Y)
+                Spawn();
         }
 
         private void updateMove()
@@ -70,7 +74,18 @@ namespace MyGame
                     move.X += PlayerMoveSpeedAcceleration;
                     Direction = 1;
                 }
+                
+                if (move.X > PlayerMoveSpeed)
+                    move.X = PlayerMoveSpeed;
+                else if (move.X < -PlayerMoveSpeed)
+                    move.X = -PlayerMoveSpeed;
             }
+            else
+            {
+                move = new Vector2f();
+            }
+
+
         }
 
         private void updatePhysics()
@@ -88,6 +103,8 @@ namespace MyGame
                 Vector2f nextPos = Position + velocity - rect.Origin;
                 FloatRect playerRect = new FloatRect(nextPos, rect.Size);
                 FloatRect tileRect = new FloatRect(tile.Position, new Vector2f(Tile.TileSize, Tile.TileSize));
+
+                DebugRender.AddRectangle(tileRect, Color.Red);
 
                 isFall = !playerRect.Intersects(tileRect);
             }

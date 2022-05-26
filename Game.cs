@@ -14,6 +14,8 @@ namespace MyGame
             player = new Player(world);
             player.StartPosition = new Vector2f(300, 150);
             player.Spawn();
+
+            DebugRender.Enabled = true;
         }
         public void Update()
         {
@@ -23,6 +25,7 @@ namespace MyGame
         {
             Program.Window.Draw(world);
             Program.Window.Draw(player);
+            DebugRender.Draw(Program.Window);
         }
     }
 }

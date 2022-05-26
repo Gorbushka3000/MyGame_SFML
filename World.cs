@@ -17,12 +17,20 @@ namespace MyGame
         }
         public void GeneratWorld()
         {
-            for (int x = 0; x < 50; x++)
+            for (int x = 3; x <= 46; x++)
                 for (int y = 17; y <= 17; y++)
                     SetTile(TileType.GRASS, x, y);
 
-            for (int x = 0; x < 50; x++)
+            for (int x = 3; x <= 46; x++)
                 for(int y = 18; y <= 32; y++)
+                    SetTile(TileType.GROUND, x, y);
+
+            for (int x = 3; x <= 4; x++)
+                for (int y = 1; y <= 17; y++)
+                    SetTile(TileType.GROUND, x, y);
+
+            for (int x = 45; x <= 46; x++)
+                for (int y = 1; y <= 17; y++)
                     SetTile(TileType.GROUND, x, y);
         }
         public void SetTile(TileType type, int x, int y)
@@ -52,7 +60,8 @@ namespace MyGame
             int X = x / Chunk.ChunkSize;
             int Y = y / Chunk.ChunkSize;
 
-            if(chunks[X][Y] == null)
+            if (X >= WorldSize || Y >= WorldSize) { return null; }
+              if(chunks[X][Y] == null)
             {
                 chunks[X][Y] = new Chunk(new Vector2i(X,Y));
             }
